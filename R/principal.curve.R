@@ -1,5 +1,3 @@
-require(modreg)
-
 "bias.correct.curve" <- function(x, pcurve, ...)
 {
 # bias correction, as suggested by
@@ -188,5 +186,3 @@ adjust.range <- function (x, fact)
 
 "whiskers" <- function(from, to)
 	segments(from[, 1], from[, 2], to[, 1], to[, 2])
-
-
