@@ -73,8 +73,8 @@ See also Banfield and Raftery (JASA, 1992).
 
 \examples{
 x <- runif(100,-1,1); x <- cbind(x, x^2+rnorm(100,sd=0.1))
-fit1 <- principal.curve(x, plot = T)
-fit2 <- principal.curve(x, plot = T, smooth = "lowess", iter=0)
+fit1 <- principal.curve(x, plot = TRUE)
+fit2 <- principal.curve(x, plot = TRUE, smooth = "lowess", iter=0)
 lines(fit1); points(fit1)
 plot(fit1); whiskers(x, fit1$s)
 }
