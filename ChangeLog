@@ -1,3 +1,14 @@
+2001-06-10  Andreas Weingessel  <Andreas.Weingessel@ci.tuwien.ac.at>
+
+	* Version 1.1-2: Changed keyword entries to fit R standard.
+
+2001-01-31  Andreas Weingessel  <Andreas.Weingessel@ci.tuwien.ac.at>
+
+	* Changed definition of v in line 58 of getlam.f from
+	double precision v(2,10)
+	to
+	double precision v(2,p)
+
 2000-12-27  Andreas Weingessel  <Andreas.Weingessel@ci.tuwien.ac.at>
 
 	* Version 1.1-0: Changes in the DESCRIPTION file to fit
@@ -6,4 +17,5 @@
 	entries, a description entry for principal.curve, default values
 	and entries for the undocumented objects.
 	Changed F to FALSE in the R code.
+	
 

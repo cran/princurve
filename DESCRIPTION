@@ -1,6 +1,6 @@
 Package: princurve
-Version: 1.1-0
-Date: 2000-12-27
+Version: 1.1-2
+Date: 2001-06-10
 Title: Fits a Principal Curve in Arbitrary Dimension
 Author: S original by Trevor Hastie <trevor@research.att.com>
 	R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
