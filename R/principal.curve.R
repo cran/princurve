@@ -52,8 +52,8 @@ require(modreg)
 }
 
 
-"lines.principal.curve" <- function(object, ...)
-  lines(object$s[object$tag,  ], ...)
+"lines.principal.curve" <- function(x, ...)
+  lines(x$s[x$tag,  ], ...)
 
 
 "periodic.lowess"<- function(x, y, f = 0.59999999999999998, ...)
@@ -75,12 +75,12 @@ require(modreg)
 }
 
 
-"plot.principal.curve" <- function(object, ...)
-  plot(object$s[object$tag,  ], ..., type = "l")
+"plot.principal.curve" <- function(x, ...)
+  plot(x$s[x$tag,  ], ..., type = "l")
 
 
-"points.principal.curve" <- function(object, ...)
-  points(object$s, ...)
+"points.principal.curve" <- function(x, ...)
+  points(x$s, ...)
 
 "principal.curve" <- 
   function(x, start = NULL, thresh = 0.001, plot.true = FALSE, maxit = 10,
@@ -99,7 +99,7 @@ require(modreg)
 # You can give starting values for the curve
   if(missing(start)) {
 # use largest principal component
-    if(smoother == "periodic.lowess") start <- start.circle(x)
+    if(smoother == "periodic.lowess") start <- startCircle(x)
     else {
       xbar <- apply(x, 2, "mean")
       xstar <- scale(x, xbar, FALSE)
@@ -167,7 +167,7 @@ adjust.range <- function (x, fact)
   }
 
 
-"start.circle" <- function(x)
+"startCircle" <- function(x)
 {
 # the starting circle uses the first two co-ordinates,
 # and assumes the others are zero

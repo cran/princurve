@@ -2,7 +2,7 @@
 \alias{adjust.range}
 \alias{bias.correct.curve}
 \alias{periodic.lowess}
-\alias{start.circle}
+\alias{startCircle}
 \alias{whiskers}
 
 \title{Internal princurve functions}
