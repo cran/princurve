@@ -1,3 +1,9 @@
+2002-07-03  Kurt Hornik  <Kurt.Hornik@wu-wien.ac.at>
+
+	* DESCRIPTION: New version is 1.1-5.
+
+	* R/principal.curve.R: Add 'PACKAGE' argument to FF calls.
+
 2002-07-02  Kurt Hornik  <Kurt.Hornik@wu-wien.ac.at>
 
 	* DESCRIPTION: New version is 1.1-4.

@@ -45,7 +45,8 @@ require(modreg)
 		 s,
 		 stretch,
 		 double(p),
-		 double(p))[c("s", "tag", "lambda", "dist")]
+		 double(p),
+                 PACKAGE = "princurve")[c("s", "tag", "lambda", "dist")]
   tt$dist <- sum(tt$dist)
   class(tt) <- "principal.curve"
   tt
