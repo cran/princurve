@@ -1,2 +1,3 @@
 get.lam                  Projection Index
 principal.curve          Fit a Principal Curve
+princurve-internal       Internal princurve functions

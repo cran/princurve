@@ -8,8 +8,8 @@ require(modreg)
   ones <- rep(1, p)
   sbar <- apply(pcurve$s, 2, "mean")
   ray <- drop(sqrt(((x - pcurve$s)^2) %*% ones))
-  dist1 <- (scale(x, sbar, F)^2) %*% ones
-  dist2 <- (scale(pcurve$s, sbar, F)^2) %*% ones
+  dist1 <- (scale(x, sbar, FALSE)^2) %*% ones
+  dist2 <- (scale(pcurve$s, sbar, FALSE)^2) %*% ones
   sign <- 2 * as.double(dist1 > dist2) - 1
   ray <- sign * ray
   sray <- approx(periodic.lowess(pcurve$lambda, ray, ...)$x,
@@ -83,8 +83,8 @@ require(modreg)
   points(object$s, ...)
 
 "principal.curve" <- 
-  function(x, start = NULL, thresh = 0.001, plot.true = F, maxit = 10,
-	   stretch = 2, smoother = "smooth.spline", trace = F, ...)
+  function(x, start = NULL, thresh = 0.001, plot.true = FALSE, maxit = 10,
+	   stretch = 2, smoother = "smooth.spline", trace = FALSE, ...)
 {
   smooth.list <- c("smooth.spline", "lowess", "periodic.lowess")
   smoother <- match.arg(smoother, smooth.list)
@@ -102,12 +102,12 @@ require(modreg)
     if(smoother == "periodic.lowess") start <- start.circle(x)
     else {
       xbar <- apply(x, 2, "mean")
-      xstar <- scale(x, xbar, F)
+      xstar <- scale(x, xbar, FALSE)
       svd.xstar <- svd(xstar)
       dd <- svd.xstar$d
       lambda <- svd.xstar$u[, 1] * dd[1]
       tag <- order(lambda)
-      s <- scale(outer(lambda, svd.xstar$v[, 1]),  - xbar, F)
+      s <- scale(outer(lambda, svd.xstar$v[, 1]),  - xbar, FALSE)
       dist <- sum((dd^2)[-1]) * n
       start <- list(s = s, tag = tag, lambda = lambda, dist
 		    = dist)
@@ -175,7 +175,7 @@ adjust.range <- function (x, fact)
   n <- d[1]
   p <- d[2]	# use best circle centered at xbar
   xbar <- apply(x, 2, "mean")
-  ray <- sqrt((scale(x, xbar, F)^2) %*% rep(1, p))
+  ray <- sqrt((scale(x, xbar, FALSE)^2) %*% rep(1, p))
   radius <- mean(ray)
   s <- cbind(radius * sin((pi * (1:101))/50),
 	     radius * cos((pi * (1:101))/50))

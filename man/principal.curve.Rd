@@ -1,19 +1,33 @@
 \name{principal.curve}
+\alias{principal.curve}
+\alias{lines.principal.curve}
+\alias{plot.principal.curve}
+\alias{points.principal.curve}
+
 \title{Fit a Principal Curve}
+
 \usage{
-principal.curve(x, start, thresh, plot.true, maxit, stretch, 
-                smoother, trace, \dots)
+principal.curve(x, start=NULL, thresh=0.001, plot.true=FALSE, maxit=10,
+stretch=2, smoother="smooth.spline", trace=FALSE, \dots)
 }
+
+\description{Fits a principal curve which describes a
+smooth curve that passes through the \code{middle} of the data \code{x} in
+an orthogonal sense.  This curve is a nonparametric generalization of a
+linear principal component.  If a closed curve is fit (using
+\code{smoother = "periodic.lowess"}) then the starting curve defaults to
+a circle, and each fit is followed by a bias correction suggested by
+J. Banfield.}
+
 \arguments{
 \item{x}{a matrix of points in arbitrary dimension}
 \item{start}{either a previously fit principal curve, or else a matrix
     of points that in row order define a starting curve. If missing, then
     the first principal component is used.  If the smoother is
-\code{"periodic.lowess"}, then a circle is used as the start.}
-\item{thresh}{convergence threshold on shortest distances to the curve;
-    default is 0.001.}
+    \code{"periodic.lowess"}, then a circle is used as the start.}
+\item{thresh}{convergence threshold on shortest distances to the curve.}
 \item{plot.true}{If \code{TRUE} the iterations are plotted.}
-\item{maxit}{maximum number of iterations; default is 10.}
+\item{maxit}{maximum number of iterations.}
 \item{stretch}{a factor by which the curve can be extrapolated when
     points are projected.  Default is 2 (times the last segment
     length). The default is 0 for \code{smoother} equal to
@@ -25,14 +39,11 @@ principal.curve(x, start, thresh, plot.true, maxit, stretch,
 \item{trace}{If \code{TRUE}, the iteration information is printed}
 \item{\dots}{additional arguments to the smoothers}
 }
+
 \value{
-An object of class \code{"principal.curve"} is returned, that describes a
-smooth curve that passes through the \code{middle} of the data \code{x} in
-an orthogonal sense.  This curve is a nonparametric generalization of a
-linear principal component.  If a closed curve is fit (using
-\code{smoother = "periodic.lowess"}) then the starting curve defaults to
-a circle, and each fit is followed by a bias correction suggested by
-J. Banfield.
+An object of class \code{"principal.curve"} is returned. For this object
+the following generic methods a currently available: \code{plot, points,
+lines}.
 
 It has components:
 \item{s}{a matrix corresponding to \code{x}, giving their projections
@@ -46,13 +57,20 @@ It has components:
 \item{call}{the call that created this object; allows it to be
 \code{updated()}.}
 }
+
 \seealso{
 \code{\link{get.lam}}
 }
+
+\keyword{regression}
+\keyword{smooth}
+\keyword{nonparametric}
+
 \references{
 ``Principal Curves'' by Hastie, T. and Stuetzle, W. 1989, JASA.
 See also Banfield and Raftery (JASA, 1992).
 }
+
 \examples{
 x <- runif(100,-1,1); x <- cbind(x, x^2+rnorm(100,sd=0.1))
 fit1 <- principal.curve(x, plot = T)
