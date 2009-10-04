@@ -22,8 +22,8 @@ J. Banfield.}
 \arguments{
 \item{x}{a matrix of points in arbitrary dimension}
 \item{start}{either a previously fit principal curve, or else a matrix
-    of points that in row order define a starting curve. If missing, then
-    the first principal component is used.  If the smoother is
+    of points that in row order define a starting curve. If missing or NULL,
+    then the first principal component is used.  If the smoother is
     \code{"periodic.lowess"}, then a circle is used as the start.}
 \item{thresh}{convergence threshold on shortest distances to the curve.}
 \item{plot.true}{If \code{TRUE} the iterations are plotted.}
@@ -35,7 +35,7 @@ J. Banfield.}
 \item{smoother}{choice of smoother. The default is
     \code{"smooth.spline"}, and other choices are \code{"lowess"} and
     \code{"periodic.lowess"}. The latter allows one to fit closed curves.
-    Beware, you may want to use \code{iter = 0} with \code{lowess()}.} 
+    Beware, you may want to use \code{iter = 0} with \code{lowess()}.}
 \item{trace}{If \code{TRUE}, the iteration information is printed}
 \item{\dots}{additional arguments to the smoothers}
 }
@@ -54,6 +54,9 @@ It has components:
     hence is \code{unit-speed}.} 
 \item{dist}{the sum-of-squared distances from the points to their
     projections.}
+\item{converged}{A logical indicating whether the algorithm converged 
+    or not.}
+\item{nbrOfIterations}{Number of iterations completed before returning.}
 \item{call}{the call that created this object; allows it to be
 \code{updated()}.}
 }
@@ -74,7 +77,7 @@ See also Banfield and Raftery (JASA, 1992).
 \examples{
 x <- runif(100,-1,1); x <- cbind(x, x^2+rnorm(100,sd=0.1))
 fit1 <- principal.curve(x, plot = TRUE)
-fit2 <- principal.curve(x, plot = TRUE, smooth = "lowess", iter=0)
+fit2 <- principal.curve(x, plot = TRUE, smoother = "lowess")
 lines(fit1); points(fit1)
 plot(fit1); whiskers(x, fit1$s)
 }

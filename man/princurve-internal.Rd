@@ -7,13 +7,13 @@
 
 \title{Internal princurve functions}
 \description{
- Internal princurve functions
+  Internal \pkg{princurve} functions.
 }
 %\usage{
 %}
 \details{
-  These are functions used be the package princurve. They are not
-  intended to be called directly.
+  These are functions used be the package \pkg{princurve}.
+  They are not intended to be called directly.
 }
 
 \keyword{utilities}
