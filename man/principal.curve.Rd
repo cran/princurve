@@ -8,7 +8,7 @@
 
 \usage{
 principal.curve(x, start=NULL, thresh=0.001, plot.true=FALSE, maxit=10,
-stretch=2, smoother="smooth.spline", trace=FALSE, \dots)
+                stretch=2, smoother="smooth.spline", trace=FALSE, \dots)
 }
 
 \description{Fits a principal curve which describes a
@@ -70,14 +70,19 @@ It has components:
 \keyword{nonparametric}
 
 \references{
-``Principal Curves'' by Hastie, T. and Stuetzle, W. 1989, JASA.
-See also Banfield and Raftery (JASA, 1992).
+  \dQuote{Principal Curves} by Hastie, T. and Stuetzle, W. 1989, JASA.
+  See also Banfield and Raftery (JASA, 1992).
 }
 
 \examples{
-x <- runif(100,-1,1); x <- cbind(x, x^2+rnorm(100,sd=0.1))
+x <- runif(100,-1,1)
+x <- cbind(x, x ^ 2 + rnorm(100, sd = 0.1))
 fit1 <- principal.curve(x, plot = TRUE)
 fit2 <- principal.curve(x, plot = TRUE, smoother = "lowess")
-lines(fit1); points(fit1)
-plot(fit1); whiskers(x, fit1$s)
+lines(fit1)
+points(fit1)
+plot(fit1)
+whiskers <- function(from, to)
+    segments(from[, 1], from[, 2], to[, 1], to[, 2])
+whiskers(x, fit1$s)
 }

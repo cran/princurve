@@ -282,7 +282,3 @@ adjust.range <- function (x, fact)
     s <- cbind(s, matrix(0, n, p - 2))
   get.lam(x, s)
 }
-
-
-"whiskers" <- function(from, to)
-	segments(from[, 1], from[, 2], to[, 1], to[, 2])

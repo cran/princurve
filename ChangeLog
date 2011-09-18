@@ -1,3 +1,13 @@
+2011-09-18  Kurt Hornik  <Kurt.Hornik@wu.ac.at>
+
+	* DESCRIPTION (Version): New version is 1.1-11.
+
+	* R/principal.curve.R:
+	* man/principal.curve.Rd:
+	Move whiskers() from code to example.
+
+	* NAMESPACE: Added.
+
 2009-10-04  Kurt Hornik  <Kurt.Hornik@wu.ac.at>
 
 	* DESCRIPTION (Version): New version is 1.1-10.
