@@ -9,7 +9,7 @@ c     which is a modified hoare quicksort.
 c
       integer t,tt,ii,jj,iu(20),il(20)
       integer a(jj)
-      double precision v(1), vt, vtt
+      double precision v(*), vt, vtt
       m=1
       i=ii
       j=jj

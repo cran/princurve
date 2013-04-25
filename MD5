@@ -1,9 +1,9 @@
-a1b5577bd55d2e7cd60b5657b464adbb *ChangeLog
-5632ef5c5a107be0911e80fd0d1daaaf *DESCRIPTION
+cac6a865a84a2c0cd38f88d56395d94e *ChangeLog
+df13c32f7d1c15b9507dc5f052705cdd *DESCRIPTION
 53d3f6dbb3f726586e28689bc3a2c3da *NAMESPACE
 28e63dee56ef295adc78f15c77da14f3 *R/principal.curve.R
 1458b262900fb75f730ab2cdb5895b4c *README
 c33636a059567d43db0adb48dfc5af21 *man/get.lam.Rd
 e2aedd9f38306e853165615c0217fc14 *man/principal.curve.Rd
 ecf7b1ed377275a2b270ba3d641f45b7 *src/getlam.f
-cd1d7e84bcce5d3a444f383d3c1f3864 *src/sortdi.f
+33498dcd0282f1c20cbefca4ad723f07 *src/sortdi.f
