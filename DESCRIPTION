@@ -1,10 +1,23 @@
 Package: princurve
-Version: 2.0.3
+Version: 2.0.4
 Title: Fits a Principal Curve in Arbitrary Dimension
 Authors@R: c(
   person("Trevor", "Hastie", email = "trevor@research.att.com", role = "aut"),
   person("Andreas", "Weingessel", email = "Andreas.Weingessel@ci.tuwien.ac.at", role = "aut"),
-  person("Kurt", "Hornik", email = "kurt.hornik@wu.ac.at", role = "aut"),
+  person(
+    "Kurt", 
+    "Hornik", 
+    email = "kurt.hornik@wu.ac.at", 
+    role = "aut",
+    comment = c(ORCID = "0000-0003-4198-9911")
+  ),
+  person(
+    "Henrik", 
+    "Bengtsson", 
+    email = "henrikb@braju.com", 
+    role = "ctb",
+    comment = c(github = "HenrikBengtsson")
+  ),
   person(
     "Robrecht", 
     "Cannoodt", 
@@ -16,18 +29,19 @@ Description: Fitting a principal curve to a data matrix in arbitrary dimensions.
 License: GPL-2
 Depends: R (>= 3.0)
 Imports: stats, graphics, Rcpp
-Suggests: testthat
+Suggests: testthat, devtools
 NeedsCompilation: yes
 RoxygenNote: 6.0.1
 URL: https://github.com/dynverse/princurve
 BugReports: https://github.com/dynverse/princurve/issues
 LinkingTo: Rcpp
-Packaged: 2018-07-04 08:54:16 UTC; rcannood
+Packaged: 2018-07-09 10:30:35 UTC; rcannood
 Author: Trevor Hastie [aut],
   Andreas Weingessel [aut],
-  Kurt Hornik [aut],
+  Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
+  Henrik Bengtsson [ctb] (HenrikBengtsson),
   Robrecht Cannoodt [aut, cre] (<https://orcid.org/0000-0003-3641-729X>,
     rcannood)
 Maintainer: Robrecht Cannoodt <rcannood@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-07-04 09:20:03 UTC
+Date/Publication: 2018-07-09 18:30:03 UTC

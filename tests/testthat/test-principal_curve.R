@@ -122,3 +122,4 @@ test_that("Testing principal_curve with periodic_lowess", {
 
   expect_gte(cor(as.vector(fit$s), as.vector(s)), .99)
 })
+
