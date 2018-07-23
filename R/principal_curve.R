@@ -100,7 +100,7 @@ principal_curve <- function(
     bias_correct_curve <- FALSE
   } else if (is.character(smoother)) {
     # substitute .'s to _'s for backwards compatibility
-    smoother <- gsub("\\.", "_", smoother)
+    smoother <- gsub(".", "_", smoother, fixed = TRUE)
     smoother <- match.arg(smoother)
     smoother_function <- smoother_functions[[smoother]]
 
@@ -165,7 +165,7 @@ principal_curve <- function(
     as.double(NA),
     nrow = ifelse(approx_points > 0, approx_points, nrow(x)),
     ncol = ncol(x),
-    dimnames = dimnames(x)
+    dimnames = list(NULL, colnames(x))
   )
 
   has_converged <- abs(dist_old - pcurve$dist) <= thresh * dist_old
