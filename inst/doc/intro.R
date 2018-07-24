@@ -1,33 +1,37 @@
----
-title: "Explanation of the principal curve algorithm"
-author: "Robrecht Cannoodt"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Explanation of the principal curve algorithm}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
----
-
-<!-- github markdown using
-rmarkdown::render("vignettes/algorithm.Rmd", output_format = "github_document")
--->
-
-```{r setup, echo=FALSE, message=FALSE}
-knitr::opts_chunk$set(comment = "#>", collapse = TRUE, echo = FALSE)
+## ----setup, echo = FALSE, message = FALSE--------------------------------
+knitr::opts_chunk$set(comment = "#>", echo = FALSE, fig.width = 8, fig.height = 6)
 set.seed(1)
 library(dplyr)
 library(tidyr)
 library(purrr)
 library(ggplot2)
 library(princurve)
-```
 
-The workings of calculating a principal curve is explained
-with an example. Calculating the principal curves is an interative process.
+library(magick)
 
-```{r iterative, fig.show='animate', ffmpeg.format='gif'}
+ggif_list <- function(list, .width = 8, .height = 6, .dpi = 120, .fps = 1, ...) {
+  dir <- tempfile("gif_files")
+  dir.create(dir)
+  on.exit(unlink(dir))
+  
+  img <- lapply(
+    seq_along(list),
+    function(i) {
+      filename <- paste0(dir, "/image-", i, ".png")
+      ggsave(filename, list[[i]], width = .width, height = .height, dpi = .dpi)
+      image_read(filename)
+    }
+  )
+  
+  image_animate(do.call(c, img), fps = .fps, dispose = "none")
+}
+
+ggif_lapply <- function(X, FUN, .width = 8, .height = 6, .dpi = 120, .fps = 1, ...) {
+  list <- lapply(X, FUN)
+  ggif_list(list, .width = .width, .height = .height, .dpi = .dpi, .fps = .fps, ...)
+}
+
+## ----dataset-------------------------------------------------------------
 set.seed(1)
 z <- sort(runif(100, -1.4 * pi, .4 * pi))
 s <- data_frame(
@@ -41,80 +45,66 @@ x <- s %>%
     y = y + rnorm(length(x), 0, .05)
   )
 
-for (it in seq(0, 10)) {
+## ----iterative-----------------------------------------------------------
+ggif_lapply(seq(0, 10), function(it) {
   fit <- principal_curve(as.matrix(x), maxit = it)
-  g <- ggplot() +
+  
+  curve <- 
+    as_data_frame(fit$s) %>% 
+    mutate(lambda = fit$lambda, it = it) %>% 
+    slice(fit$ord) %>% 
+    mutate(pos = seq_len(n()))
+  
+  ggplot() +
     geom_point(aes(x, y), x, colour = "darkgray") +
-    geom_path(aes(x, y), as_data_frame(fit$s[fit$ord, ])) +
-    theme_bw()+
+    geom_path(aes(x, y), curve) +
+    theme_bw() +
     coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
     labs(title = paste0("Iteration ", it)) 
-  print(g)
-}
-```
+})
 
-## Pseudocode
-```r
-s = principal_component(x)
-x_proj = project(x, s)
-lambda = arc_length(x_proj)
-
-for (it = 1..max_iter) {
-  s = smooth(lambda, x)
-  s = approximate(s)
-  x_proj = project(x, s)
-  lambda = arc_length(x_proj)
-}
-```
-
-## Initialisation
-The principal curve `s` is initialised (at iteration 0) by
-calculating the principal component. All points in `x` are projected
-orthogonally onto `s`, and the arc-length `lambda` of each projection w.r.t.
-to the start of the curve is calculated.
-
-```{r initialisation, fig.show='animate', ffmpeg.format='gif'}
+## ----initialisation------------------------------------------------------
 fit0 <- principal_curve(as.matrix(x), maxit = 0)
 
-ggplot() +
+steps <- c(
+  "Step 0a: Initialise curve with principal component", 
+  "Step 0b: Orthogonally project points to curve",
+  "Step 0c: Calculate arc-length of projections w.r.t. the origin of the curve"
+)
+
+g0 <- ggplot() +
   geom_point(aes(x, y), x) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
-  labs(title = "Step 0a: Initialise curve with principal component\nStep 0b: Orthogonally project points to curve\nStep 0c: Calculate arc-length of projections w.r.t. the origin of the curve")
+  labs(x = "x", y = "y", title = paste0(c("", "", ""), steps, collapse = "\n"))
 
-ggplot() +
+g1 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit0$s[fit0$ord, ])) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
-  labs(title = "> Step 0a: Initialise curve with principal component\nStep 0b: Orthogonally project points to curve\nStep 0c: Calculate arc-length of projections w.r.t. the origin of the curve")
+  labs(x = "x", y = "y", title = paste0(c("> ", "", ""), steps, collapse = "\n"))
 
-ggplot() +
+g2 <- ggplot() +
   geom_segment(aes(x = x$x, xend = fit0$s[,1], y = x$y, yend = fit0$s[,2]), linetype = "dashed") +
   geom_path(aes(x, y), as_data_frame(fit0$s[fit0$ord, ]), colour = "darkgray") +
   geom_point(aes(x, y), x, colour = "darkgray") +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
-  labs(x = "x", y = "y", title = "Step 0a: Initialise curve with principal component\n> Step 0b: Orthogonally project points to curve\nStep 0c: Calculate arc-length of projections w.r.t. the origin of the curve")
+  labs(x = "x", y = "y", title = paste0(c("", "> ", ""), steps, collapse = "\n"))
 
-ggplot() +
+g3 <- ggplot() +
   geom_segment(aes(x = x$x, xend = fit0$s[,1], y = x$y, yend = fit0$s[,2]), linetype = "dashed", colour = "lightgray") +
   geom_path(aes(x, y), as_data_frame(fit0$s[fit0$ord, ]), colour = "darkgray") +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_point(aes(x, y), as_data_frame(fit0$s)) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
-  labs(x = "x", y = "y", title = "Step 0a: Initialise curve with principal component\nStep 0b: Orthogonally project points to curve\n> Step 0c: Calculate arc-length of projections w.r.t. the origin of the curve")
-```
+  labs(x = "x", y = "y", title = paste0(c("", "", "> "), steps, collapse = "\n"))
 
-## Iteration 1
-Each iteration consists of three steps: smoothing, approximation, and projection.
+ggif_list(list(g0, g1, g2, g3))
 
-### Smoothing: calculate new curve
-During the smoothing step, a new curve is computed by smoothing each 
-dimension in `x` w.r.t. the arc-length `lambda` calculated for the previous curve.
-
-```{r smooth, fig.show='animate', ffmpeg.format='gif'}
+## ----smooth--------------------------------------------------------------
 fit1 <- principal_curve(as.matrix(x), maxit = 1)
 
 xdf <- x %>% 
@@ -130,31 +120,25 @@ ggplot(xdf) +
   geom_line(aes(lambda, smooth)) +
   facet_wrap(~dimension, scales = "free") +
   theme_bw()
-```
 
-```{r beforeafter, fig.show='animate', ffmpeg.format='gif'}
-ggplot() +
+## ----beforeafter---------------------------------------------------------
+g0 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit0$s[fit0$ord, ])) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "Before")
 
-ggplot() +
+g1 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit1$s[fit1$ord, ])) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "After")
-```
 
-### Approximation: simplify curve
-In the next step (projection), each of the `n` points in `x` will get compared to each segment in the curve `s`. 
-After the smoothing step, the curve consists of `n` points. Thus, the projection step would have a complexity
-of $O(n^2)$. In order to make this step $O(n)$, the `approx_points = 100` parameter can be used to 
-first approximate by a curve with 100 points.
+ggif_list(list(g0, g1))
 
-```{r approx, fig.show='animate', ffmpeg.format='gif'}
+## ----approx--------------------------------------------------------------
 xout <- seq(min(xdf$lambda), max(xdf$lambda), length.out = 100)
 xadf <- xdf %>% 
   group_by(dimension) %>% 
@@ -164,7 +148,7 @@ xadf <- xdf %>%
   ungroup() %>% 
   spread(dimension, smooth)
 
-ggplot() +
+g0 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit1$s[fit1$ord, ])) +
   geom_point(aes(x, y), as_data_frame(fit1$s)) +
@@ -172,21 +156,17 @@ ggplot() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "Before")
 
-ggplot() +
+g1 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), xadf) +
   geom_point(aes(x, y), xadf) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "After")
-```
 
-### Projection: calculate new lambda
-The projection step is same as before; all the points are orthogonally 
-projected onto the new curve, and the arc-length `lambda` is recalculated 
-for the new projections.
+ggif_list(list(g0, g1))
 
-```{r relambda}
+## ----relambda------------------------------------------------------------
 ggplot() +
   geom_segment(aes(x = x$x, xend = fit1$s[,1], y = x$y, yend = fit1$s[,2]), linetype = "dashed", colour = "lightgray") +
   geom_path(aes(x, y), as_data_frame(fit1$s[fit1$ord, ]), colour = "darkgray") +
@@ -195,18 +175,8 @@ ggplot() +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y")
-```
 
-This process is repeated until convergence or until a predefined number of iterations has passed.
-
-## Iteration 2
-For clarity's sake, the smoothing and projection steps are also shown for iteration 2.
-
-### Smoothing: calculate new curve
-During the smoothing step, a new curve is computed by smoothing each 
-dimension in `x` w.r.t. the arc-length `lambda` calculated for the previous curve.
-
-```{r smooth2, fig.show='animate', ffmpeg.format='gif'}
+## ----smooth2-------------------------------------------------------------
 fit2 <- principal_curve(as.matrix(x), maxit = 2)
 
 xdf2 <- x %>% 
@@ -222,28 +192,25 @@ ggplot(xdf2) +
   geom_line(aes(lambda, smooth)) +
   facet_wrap(~dimension, scales = "free") +
   theme_bw()
-```
 
-```{r beforeafter2, fig.show='animate', ffmpeg.format='gif'}
-ggplot() +
+## ----beforeafter2--------------------------------------------------------
+g0 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit1$s[fit1$ord, ])) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "Before")
 
-ggplot() +
+g1 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit2$s[fit2$ord, ])) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "After")
-```
 
-### Approximation: simplify curve
-The curve is simplified in order to make the projection step easier.
+ggif_list(list(g0, g1))
 
-```{r approx2, fig.show='animate', ffmpeg.format='gif'}
+## ----approx2-------------------------------------------------------------
 xout2 <- seq(min(xdf2$lambda), max(xdf2$lambda), length.out = 100)
 xadf2 <- xdf2 %>% 
   group_by(dimension) %>% 
@@ -253,7 +220,7 @@ xadf2 <- xdf2 %>%
   ungroup() %>% 
   spread(dimension, smooth)
 
-ggplot() +
+g0 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), as_data_frame(fit2$s[fit2$ord, ])) +
   geom_point(aes(x, y), as_data_frame(fit2$s)) +
@@ -261,21 +228,17 @@ ggplot() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "Before")
 
-ggplot() +
+g1 <- ggplot() +
   geom_point(aes(x, y), x, colour = "darkgray") +
   geom_path(aes(x, y), xadf2) +
   geom_point(aes(x, y), xadf2) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y", title = "After")
-```
 
-### Projection: calculate new lambda
-All the points are orthogonally 
-projected onto the new curve, and the arc-length `lambda` is recalculated 
-for the new projections.
+ggif_list(list(g0, g1))
 
-```{r relambda2}
+## ----relambda2-----------------------------------------------------------
 ggplot() +
   geom_segment(aes(x = x$x, xend = fit2$s[,1], y = x$y, yend = fit2$s[,2]), linetype = "dashed", colour = "lightgray") +
   geom_path(aes(x, y), as_data_frame(fit2$s[fit2$ord, ]), colour = "darkgray") +
@@ -284,4 +247,15 @@ ggplot() +
   theme_bw() +
   coord_cartesian(xlim = c(-1.6, 1.6), ylim = c(-1.1, 1.1)) +
   labs(x = "x", y = "y")
-```
+
+## ----compare, fig.width=8, fig.height=8----------------------------------
+data("benchmarks", package = "princurve")
+
+ggplot(benchmarks, aes(num_points, median / 1000)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~expr, ncol = 1, scales = "free") +
+  theme_bw() +
+  labs(x = "Number of rows in dataset", y = "Time (s)") +
+  scale_colour_brewer(palette = "Set1")
+
