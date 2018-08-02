@@ -1,5 +1,5 @@
 Package: princurve
-Version: 2.1.2
+Version: 2.1.2.1
 Title: Fits a Principal Curve in Arbitrary Dimension
 Authors@R: c(
   person("Trevor", "Hastie", email = "trevor@research.att.com", role = "aut"),
@@ -39,7 +39,7 @@ VignetteBuilder: knitr
 Collate: 'RcppExports.R' 'bias_correct_curve.R' 'data.R' 'get.lam.R'
         'package.R' 'periodic_lowess.R' 'smoother_functions.R'
         'principal_curve.R' 'principal.curve.R' 'start_circle.R'
-Packaged: 2018-07-24 16:54:57 UTC; rcannood
+Packaged: 2018-08-02 08:15:00 UTC; ripley
 Author: Trevor Hastie [aut],
   Andreas Weingessel [aut],
   Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
@@ -48,4 +48,4 @@ Author: Trevor Hastie [aut],
     rcannood)
 Maintainer: Robrecht Cannoodt <rcannood@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-07-24 21:40:02 UTC
+Date/Publication: 2018-08-02 08:51:49 UTC

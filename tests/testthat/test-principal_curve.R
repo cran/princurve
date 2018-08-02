@@ -99,13 +99,13 @@ test_that("Testing principal_curve with lowess", {
 
 
 test_that("Testing principal.curve for backward compatibility", {
-  if (Sys.Date() >= deprecation_date) {
-    expect_warning({
-      fit <- principal.curve(x, smoother = "smooth.spline")
-    }, "deprecated")
-  } else {
+##  if (Sys.Date() >= deprecation_date) {
+##    expect_warning({
+##      fit <- principal.curve(x, smoother = "smooth.spline")
+##    }, "deprecated")
+##  } else {
     fit <- principal.curve(x, smoother = "smooth.spline")
-  }
+##  }
 
   svg(file, 5, 5)
   expect_error({
