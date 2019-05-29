@@ -1,5 +1,5 @@
 Package: princurve
-Version: 2.1.3
+Version: 2.1.4
 Title: Fits a Principal Curve in Arbitrary Dimension
 Authors@R: c(
     person("Trevor", "Hastie", email = "trevor@research.att.com", role = "aut"),
@@ -22,20 +22,22 @@ Authors@R: c(
       role = c("aut", "cre"),
       comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
     ))
-Description: Fitting a principal curve to a data matrix in arbitrary dimensions.
+Description: Fitting a principal curve to a data matrix in arbitrary dimensions. 
+  Hastie and Stuetzle (1989) <doi:10.2307/2289936>.
 License: GPL-2
+Encoding: UTF-8
 Depends: R (>= 3.0)
 Imports: stats, graphics, grDevices, Rcpp
 Suggests: devtools, testthat
 LinkingTo: Rcpp
 NeedsCompilation: yes
-RoxygenNote: 6.1.0
-URL: https://github.com/dynverse/princurve
-BugReports: https://github.com/dynverse/princurve/issues
-Collate: 'RcppExports.R' 'bias_correct_curve.R' 'get.lam.R' 'package.R'
-        'periodic_lowess.R' 'smoother_functions.R' 'principal_curve.R'
-        'principal.curve.R' 'start_circle.R'
-Packaged: 2018-09-10 13:47:58 UTC; rcannood
+RoxygenNote: 6.1.1
+URL: https://github.com/rcannood/princurve
+BugReports: https://github.com/rcannood/princurve/issues
+Collate: 'RcppExports.R' 'bias_correct_curve.R' 'deprecated.R'
+        'package.R' 'periodic_lowess.R' 'smoother_functions.R'
+        'principal_curve.R' 'start_circle.R'
+Packaged: 2019-05-29 12:26:55 UTC; rcannood
 Author: Trevor Hastie [aut],
   Andreas Weingessel [aut],
   Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
@@ -44,4 +46,4 @@ Author: Trevor Hastie [aut],
     rcannood)
 Maintainer: Robrecht Cannoodt <rcannood@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-10-08 10:10:02 UTC
+Date/Publication: 2019-05-29 14:20:02 UTC
