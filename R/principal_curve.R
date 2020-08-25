@@ -1,8 +1,8 @@
 #' Fit a Principal Curve
 #'
-#' Fits a principal curve which describes a smooth curve that passes through the \code{middle}
-#' of the data \code{x} in an orthogonal sense.  This curve is a nonparametric generalization
-#' of a linear principal component.  If a closed curve is fit (using \code{smoother = "periodic_lowess"})
+#' Fit a principal curve which describes a smooth curve that passes through the \code{middle}
+#' of the data \code{x} in an orthogonal sense. This curve is a non-parametric generalization
+#' of a linear principal component. If a closed curve is fit (using \code{smoother = "periodic_lowess"})
 #' then the starting curve defaults to a circle, and each fit is followed by a bias correction
 #' suggested by Jeff Banfield.
 #'
@@ -236,11 +236,7 @@ formals(principal_curve)$smoother <- names(smoother_functions)
 #' @export
 #' @importFrom graphics lines
 lines.principal_curve <- function(x, ...) {
-  if ("ord" %in% names(x)) {
-    ord <- x[["ord"]]
-  } else {
-    ord <- x[["tag"]]
-  }
+  ord <- x[["ord"]]
   graphics::lines(x$s[ord, ], ...)
 }
 
@@ -248,11 +244,7 @@ lines.principal_curve <- function(x, ...) {
 #' @export
 #' @importFrom graphics plot
 plot.principal_curve <- function(x, ...) {
-  if ("ord" %in% names(x)) {
-    ord <- x[["ord"]]
-  } else {
-    ord <- x[["tag"]]
-  }
+  ord <- x[["ord"]]
   graphics::plot(x$s[ord, ], ..., type = "l")
 }
 

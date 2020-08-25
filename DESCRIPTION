@@ -1,6 +1,6 @@
 Package: princurve
-Version: 2.1.4
-Title: Fits a Principal Curve in Arbitrary Dimension
+Version: 2.1.5
+Title: Fit a Principal Curve in Arbitrary Dimension
 Authors@R: c(
     person("Trevor", "Hastie", email = "trevor@research.att.com", role = "aut"),
     person("Andreas", "Weingessel", email = "Andreas.Weingessel@ci.tuwien.ac.at", role = "aut"),
@@ -31,13 +31,13 @@ Imports: stats, graphics, grDevices, Rcpp
 Suggests: devtools, testthat
 LinkingTo: Rcpp
 NeedsCompilation: yes
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 URL: https://github.com/rcannood/princurve
 BugReports: https://github.com/rcannood/princurve/issues
 Collate: 'RcppExports.R' 'bias_correct_curve.R' 'deprecated.R'
         'package.R' 'periodic_lowess.R' 'smoother_functions.R'
         'principal_curve.R' 'start_circle.R'
-Packaged: 2019-05-29 12:26:55 UTC; rcannood
+Packaged: 2020-08-24 12:53:13 UTC; rcannood
 Author: Trevor Hastie [aut],
   Andreas Weingessel [aut],
   Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
@@ -46,4 +46,4 @@ Author: Trevor Hastie [aut],
     rcannood)
 Maintainer: Robrecht Cannoodt <rcannood@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-05-29 14:20:02 UTC
+Date/Publication: 2020-08-25 06:40:08 UTC

@@ -1,16 +1,21 @@
-princurve 2.1.4 (2019-05-29)
-
-  * Fix warning in `stats::approx()` due to changes made in R 3.6.
+# princurve 2.1.5 (2020-08-13)
   
-  * Defuncted `principal.curve()` and `get.lam()`.
+  * BUG FIX `project_to_curve()`: Fix pass-by-reference bug, issue #33. Thanks 
+    to @szcf-weiya for detecting and fixing this bug!
 
-princurve 2.1.3 (2018-09-10)
+# princurve 2.1.4 (2019-05-29)
 
-  * Removed extra dependencies in princurve by removing vignettes; fixes #28.
+  * BUG FIX: Fix warning in `stats::approx()` due to changes made in R 3.6.
   
-  * Fully deprecated `principal.curve()` and `get.lam()`.
+  * DEFUNCT `principal.curve()` and `get.lam()`.
 
-princurve 2.1.2 (2018-07-24)
+# princurve 2.1.3 (2018-09-10)
+
+  * BUG FIX: Removed extra dependencies in princurve by removing vignettes; fixes #28.
+  
+  * DEPRECATION `principal.curve()` and `get.lam()`.
+
+# princurve 2.1.2 (2018-07-24)
   
   * DOCUMENTATION: Use the `magick` package to generate animated GIFs in 
     the vignette, instead of the `animation` package, because
@@ -19,7 +24,7 @@ princurve 2.1.2 (2018-07-24)
   * DEPRECATION: Added deprecation which will be triggered starting from 2018-08-01
     upon calling `principal.curve()` or `get.lam()`.
 
-princurve 2.1.1 (2018-07-23)
+# princurve 2.1.1 (2018-07-23)
 
   * DOCUMENTATION: Added vignettes on the algorithm behind princurve and
     on benchmarking results between princurve 1.1 and 2.1.
@@ -34,7 +39,7 @@ princurve 2.1.1 (2018-07-23)
     
   * DOCUMENTATION: Fix in README documentation.
 
-princurve 2.1.0 (2018-07-14)
+# princurve 2.1.0 (2018-07-14)
 
   * BUG FIX `principal_curve()`: avoid division by zero when the initial principal curve
     has already converged.
@@ -63,7 +68,7 @@ princurve 2.1.0 (2018-07-14)
     approximation of the curve between smoothing and projection, to ensure 
     `principal_curve()` scales well to higher numbers of samples.
     
-princurve 2.0.4 (2018-07-09)
+# princurve 2.0.4 (2018-07-09)
 
   * BUG FIX: Fixed issues with legacy `principal.curve()` and `get.lam()` (#8).
 
@@ -89,7 +94,7 @@ princurve 2.0.4 (2018-07-09)
   
   * MINOR CHANGE: Support both `news()` and markdown news on GitHub.
 
-princurve 2.0.3 (2018-07-04)
+# princurve 2.0.3 (2018-07-04)
 
   * SIGNIFICANT CHANGES: Reimplemented `project_to_curve()` completely in
     Rcpp, thereby completely removing all Fortran code from princurve.
@@ -99,7 +104,7 @@ princurve 2.0.3 (2018-07-04)
   * TESTING: Added tests to ensure `project_to_curve()` works similar to
     legacy `get.lam()`.
 
-princurve 2.0.2 (2018-06-12)
+# princurve 2.0.2 (2018-06-12)
 
   * MAINTAINER: Changed the maintainer from Andreas Weingessel
     to Robrecht Cannoodt.
@@ -124,20 +129,20 @@ princurve 2.0.2 (2018-06-12)
   * TESTING: Added tests for `principal_curve()` and `project_to_curve()`.
 
   * TESTING: Enabled continuous integration using
-    https://travis-ci.org/rcannood/princurve and
-    https://ci.appveyor.com/project/rcannood/princurve.
+    [travis-ci.org](https://travis-ci.org/rcannood/princurve) and
+    [ci.appveyor.com](https://ci.appveyor.com/project/rcannood/princurve).
 
-princurve 1.1-12 (2013-04-25)
+# princurve 1.1-12 (2013-04-25)
 
   * BUG FIX: src/sortdi.f (sortdi): Fix Fortran array bounds problem.
 
-princurve 1.1-11 (2011-09-18)
+# princurve 1.1-11 (2011-09-18)
 
   * MINOR CHANGES: Update for R 2.0.
 
   * DEPRECATION: Removed `whiskers()`
 
-princurve 1.1-10 (2009-10-04)
+# princurve 1.1-10 (2009-10-04)
 
   * BENCHMARKING: For larger data sets, most of the time is spent in `get.lam()`.
 
@@ -169,15 +174,15 @@ princurve 1.1-10 (2009-10-04)
 
   * MINOR CHANGES: Cleaned up source code (removed comments).
 
-princurve 1.1-9 (2007-07-12)
+# princurve 1.1-9 (2007-07-12)
 
   * MINOR CHANGE: Clarify license.
 
-princurve 1.1-8 (2006-10-04)
+# princurve 1.1-8 (2006-10-04)
 
   * MINOR CHANGE: Update license and add depending packages.
 
-princurve 1.1-7 (2004-11-04)
+# princurve 1.1-7 (2004-11-04)
 
   * MINOR CHANGE: Depend on R >= 1.9.0
 
@@ -186,19 +191,19 @@ princurve 1.1-7 (2004-11-04)
 
   * MINOR CHANGE: Don't require defunct `modreg`.
 
-princurve 1.1-6 (2004-01-31)
+# princurve 1.1-6 (2004-01-31)
 
   * MINOR CHANGE: Removed INDEX.
 
-princurve 1.1-5 (2002-07-03)
+# princurve 1.1-5 (2002-07-03)
 
   * MINOR CHANGE: Added `PACKAGE` to Fortran calls.
 
-princurve 1.1-4 (2002-07-02)
+# princurve 1.1-4 (2002-07-02)
 
   * MINOR CHANGES: Change all `T` to `TRUE`.
 
-princurve 1.1-2 (2001-06-10)
+# princurve 1.1-2 (2001-06-10)
 
   * MINOR CHANGE `plot.principal.curve()`: Rename argument `object` to `x`.
 
@@ -208,7 +213,7 @@ princurve 1.1-2 (2001-06-10)
 
   * MINOR CHANGE: Rename internal function`start.circle()` to `startCircle()`.
 
-princurve 1.1-0 (2000-12-27)
+# princurve 1.1-0 (2000-12-27)
 
   * DESCRIPTION: Added Title and Maintainer field.
 
